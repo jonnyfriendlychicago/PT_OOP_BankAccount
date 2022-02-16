@@ -1,3 +1,4 @@
+"""
 class User:
     bank_name = "First National Dojo"
     all_accounts = []
@@ -78,47 +79,83 @@ a3.make_deposit(79).make_withdrawal(40).make_withdrawal(20).make_withdrawal(20).
 
 a1.transfer_money(a3, 19)
 
+"""
 class BankAccount:
-    
+    accounts = []
     def __init__(self, int_rate, balance):
         self.int_rate = int_rate
         self.balance = balance
-        # self.int_rate = 0.01
-        # self.balance = 0
+        BankAccount.accounts.append(self)
+        #above newly added
         print(f"Accounted created.  Current balance is ${self.balance} with a current interest rate of {self.int_rate}.")
-        # return self
+        # return None
+    
+    def display_account_info (self):
+        # self.display_account_info = print(f"Balance: ${self.balance}")
+        #11pm here... just realized how funky above line is.  not sure why ever wrote it that way.  below is attempted fix
+        print(f"Balance: ${self.balance}")
+        # return self    
     
     def deposit (self, amount): 
         self.balance += amount
-        print(f"Deposit accepted: ${amount}.  New balance: ${self.balance}.")
+        # print(f"Deposit accepted: ${amount}.  New balance: ${self.balance}.")
+        print(f"Deposit accepted: ${amount}.")
+        print(f"Balance: ${self.balance}")
+        # self.display_account_info()
+        #***********************
+        # above line "self.display_account_info()" works here... but never works again in any of the other methods that try to use it.  WHY????
+        return self
 
-    # def withdraw (self, amount):
-    #     if self.balance < self.amount:
-    #         self.balance -= 5
-    #         print("Insufficient funds: now we just charged you $5 fee... and you cant do shit about it.  Thank you for voting Republican!  We could not do this without their protection.")
-    #     else: 
-    #         self.balance -= amount
-    #         print(f"withdrawl of {amount} completed.  We will find another way to steal your money next time.")
-    #     return self
+    def withdraw (self, amount):
+        if self.balance < amount:
+            self.old_balance = self.balance
+            self.balance -= 5
+            print(f"Insufficient funds.  You tried to withdraw ${amount} but your balance was only ${self.old_balance}.  For even attempting that, we just charged you a completely unjustifiable $5 fee... and you cant do jack about it.")
+            # self.display_account_info()
+            print(f"Balance: ${self.balance}")
+        else: 
+            self.balance -= amount
+            print(f"Withdrawl completed: ${amount} ")
+            # self.display_account_info()
+            print(f"Balance: ${self.balance}")
+        return self
 
-    # def display_account_info (self):
-    #     self.display_account_info = print(f"Balance: ${self.balance}")
-    #     return self
+    def yield_interest(self):
+        if self.balance > 0:
+            self.int_added = self.balance * self.int_rate
+            self.balance =  self.int_added + self.balance
+            print(f"Interest yield added to account in the amount: ${self.int_added}.")
+            # self.display_account_info()
+            print(f"Balance: ${self.balance}")
+        else: 
+            print(f"No interest yield payment: account balance less than or equal to zero.")
+            # self.display_account_info()
+            print(f"Balance: ${self.balance}")
+        return self
 
-    # def yield_interest(self):
-    #     if self.balance > 0:
-    #         self.balance = self.balance * self.int_rate + self.balance
-    #         print(f"interest yield added to account.  New Account Balance: {self.balance}.")
-    #     else: 
-    #         print(f"No interest yield payment: account balance less than or equal to zero.")
-    #     return self
-
+    @classmethod
+    def print_all_accounts(cls):
+        print("List of all account balances:::::::::::::::::::")
+        for account in cls.accounts:
+            account.display_account_info()
+    """
+    @classmethod
+    def all_balances(cls):
+        sum = 0
+        for account in cls.all_accounts:
+            sum += account.balance
+        print(sum)
+    """
 acct1 = BankAccount(0.02,100)
-# acct2 = BankAccount("500", "0.03")
+acct2 = BankAccount(0.02,1000)
 
-acct1.deposit(100)
-# .deposit("100").deposit("100").withdraw("50").yield_interest
+acct1.deposit(1).deposit(2).deposit(3).withdraw(4).yield_interest()
 
+acct2.deposit(2).deposit(200).withdraw(20).withdraw(40).withdraw(60).withdraw(80).yield_interest()
+
+BankAccount.print_all_accounts()
+
+# cls.all_balances ()
 
 # below from lesson example 
 """
