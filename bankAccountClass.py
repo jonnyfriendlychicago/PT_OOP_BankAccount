@@ -1,4 +1,4 @@
-"""
+
 class User:
     bank_name = "First National Dojo"
     all_accounts = []
@@ -79,7 +79,7 @@ a3.make_deposit(79).make_withdrawal(40).make_withdrawal(20).make_withdrawal(20).
 
 a1.transfer_money(a3, 19)
 
-"""
+
 class BankAccount:
     accounts = []
     def __init__(self, int_rate, balance):
@@ -100,8 +100,8 @@ class BankAccount:
         self.balance += amount
         # print(f"Deposit accepted: ${amount}.  New balance: ${self.balance}.")
         print(f"Deposit accepted: ${amount}.")
-        print(f"Balance: ${self.balance}")
-        # self.display_account_info()
+        # print(f"Balance: ${self.balance}")
+        self.display_account_info()
         #***********************
         # above line "self.display_account_info()" works here... but never works again in any of the other methods that try to use it.  WHY????
         return self
@@ -111,13 +111,13 @@ class BankAccount:
             self.old_balance = self.balance
             self.balance -= 5
             print(f"Insufficient funds.  You tried to withdraw ${amount} but your balance was only ${self.old_balance}.  For even attempting that, we just charged you a completely unjustifiable $5 fee... and you cant do jack about it.")
-            # self.display_account_info()
-            print(f"Balance: ${self.balance}")
+            self.display_account_info()
+            # print(f"Balance: ${self.balance}")
         else: 
             self.balance -= amount
             print(f"Withdrawl completed: ${amount} ")
-            # self.display_account_info()
-            print(f"Balance: ${self.balance}")
+            self.display_account_info()
+            # print(f"Balance: ${self.balance}")
         return self
 
     def yield_interest(self):
@@ -125,19 +125,19 @@ class BankAccount:
             self.int_added = self.balance * self.int_rate
             self.balance =  self.int_added + self.balance
             print(f"Interest yield added to account in the amount: ${self.int_added}.")
-            # self.display_account_info()
-            print(f"Balance: ${self.balance}")
+            self.display_account_info()
+            # print(f"Balance: ${self.balance}")
         else: 
             print(f"No interest yield payment: account balance less than or equal to zero.")
-            # self.display_account_info()
-            print(f"Balance: ${self.balance}")
+            self.display_account_info()
+            # print(f"Balance: ${self.balance}")
         return self
 
     @classmethod
     def print_all_accounts(cls):
         print("List of all account balances:::::::::::::::::::")
-        for account in cls.accounts:
-            account.display_account_info()
+        for x in cls.accounts:
+            x.display_account_info()
     """
     @classmethod
     def all_balances(cls):
